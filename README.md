@@ -1,6 +1,6 @@
 # BoxCraft-Launcher
 
-Lanzador (Launcher) no oficial de Minecraft Bedrock para GNU/Linux escrito en Python con Qt6, que cuenta con control de versiones y una fácil instalación de mods, mapas y más con un solo clic. Este software no está asociado, respaldado ni aprobado por Mojang AB, Microsoft Corporation ni ninguna entidad relacionada con Minecraft.
+Launcher no oficial de Minecraft Bedrock para GNU/Linux escrito en Python con Qt6, que cuenta con control de versiones y una fácil instalación de mods, mapas y más con un solo clic. Este software no está asociado, respaldado ni aprobado por Mojang AB, Microsoft Corporation ni ninguna entidad relacionada con Minecraft.
 
 <img width="1147" height="727" alt="imagen" src="https://github.com/user-attachments/assets/b7dc18ce-7616-4609-a4e7-6a8b572faf72" />
 
