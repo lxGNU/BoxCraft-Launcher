@@ -1,16 +1,18 @@
 # BoxCraft-Launcher
-Unofficial Minecraft Bedrock Launcher for GNU/Linux written in Python with Qt6, featuring version control and easy one-click installation of mods, maps, and more.  This software is not associated with, endorsed by, or approved by Mojang AB, Microsoft Corporation, or any entity related to Minecraft.
 
-<img width="1259" height="734" alt="imagen" src="https://github.com/user-attachments/assets/d144b43d-4343-4832-82ca-8a84cea2c5ae" />
+Lanzador (Launcher) no oficial de Minecraft Bedrock para GNU/Linux escrito en Python con Qt6, que cuenta con control de versiones y una fácil instalación de mods, mapas y más con un solo clic. Este software no está asociado, respaldado ni aprobado por Mojang AB, Microsoft Corporation ni ninguna entidad relacionada con Minecraft.
 
-Options:
-- Allows you to install the game using an APK file (we do not provide access to APK files; accessing them is the user's responsibility).
-- Allows you to launch the game using mcpelauncher-client and extract its data using mcpelauncher-extract (links in credits).
-- Provides access to installing add-ons, texture packs, worlds, and skins (future option) via the Curseforge API.
-- Allows for the easy and quick installation and management of mods, texture packs, and worlds.
+<img width="1147" height="727" alt="imagen" src="https://github.com/user-attachments/assets/b7dc18ce-7616-4609-a4e7-6a8b572faf72" />
 
-Created for the projects:
-- mcpelauncher-client: https://codeberg.org/javiercplus/mcpelauncher-client-extend
+Opciones:
+- Permite instalar el juego utilizando un archivo APK (nosotros no proporcionamos acceso a archivos APK; el acceso a los mismos es responsabilidad del usuario).
+- Permite iniciar el juego utilizando mcpelauncher-client y extraer sus datos usando mcpelauncher-extract (enlaces en los créditos).
+- Proporciona acceso a la instalación de complementos (add-ons), paquetes de texturas, mundos y skins (opción futura) a través de la API de Curseforge.
+- Permite la instalación y gestión fácil y rápida de mods, paquetes de texturas y mundos.
+
+Creado usando los proyectos:
+- mcpelauncher-client: https://codeberg.org/javiercplus/mcpelauncher-client-extend  
 - mcpelauncher-extract: https://codeberg.org/javiercplus/mcpe-extract
 
-Special thanks to Deepin Latin Code - Under the GPL v3.0 license
+
+Agradecimientos especiales a Deepin Latin Code - Bajo la licencia GPL v3.0.
