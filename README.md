@@ -14,5 +14,18 @@ Creado usando los proyectos:
 - mcpelauncher-client: https://codeberg.org/javiercplus/mcpelauncher-client-extend  
 - mcpelauncher-extract: https://codeberg.org/javiercplus/mcpe-extract
 
+Compilar binario:
+
+    python build.py --clean --test
+(Mueve el archivo compilado en dist a la carpeta del proyecto)
+
+Compilar paquete Deb:
+
+    dch --create -D stable --package "boxcraft-launcher" --newversion=1.x.x "New release."
+
+    sudo apt build-dep .
+
+    dpkg-buildpackage -Zxz -rfakeroot -b
+
 
 Agradecimientos especiales a Deepin Latin Code - Bajo la licencia GPL v3.0.
