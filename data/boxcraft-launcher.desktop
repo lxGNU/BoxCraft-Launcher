@@ -1,0 +1,11 @@
+[Desktop Entry]
+Name=BoxCraft Launcher
+Name[es]=BoxCraft Launcher
+Name[pt_BR]=BoxCraft Launcher
+Comment=BoxCraft Launcher is an unofficial launcher for Minecraft: Bedrock Edition in GNU/Linux
+Comment[es]=BoxCraft Launcher es una launcher no oficial para Minecraft: Bedrock Edition en GNU/Linux
+Exec=/usr/share/boxcraft-launcher/boxcraft-launcher
+Icon=/usr/share/icons/hicolor/scalable/apps/boxcraft-launcher.png
+StartupWMClass=boxcraft-launcher
+Type=Application
+Categories=System;
