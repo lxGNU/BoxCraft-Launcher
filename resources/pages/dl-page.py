@@ -522,9 +522,30 @@ class ModDetailWidget(QWidget):
         self.is_loading = False
     
     def setup_ui(self):
+        # Layout principal
         layout = QVBoxLayout(self)
         layout.setContentsMargins(15, 15, 15, 15)
         layout.setSpacing(10)
+        
+        # ============= CONTENIDO PRINCIPAL CON SCROLL ÚNICO =============
+        main_scroll = QScrollArea()
+        main_scroll.setWidgetResizable(True)
+        main_scroll.setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
+        main_scroll.setStyleSheet("""
+            QScrollArea {
+                border: none;
+                background-color: transparent;
+            }
+            QScrollArea > QWidget > QWidget {
+                background-color: transparent;
+            }
+        """)
+        
+        # Widget de contenido principal
+        content_widget = QWidget()
+        content_layout = QVBoxLayout(content_widget)
+        content_layout.setContentsMargins(0, 0, 10, 0)  # Margen derecho para la scrollbar
+        content_layout.setSpacing(15)
         
         # Encabezado con nombre
         self.name_label = QLabel()
@@ -538,7 +559,7 @@ class ModDetailWidget(QWidget):
             }
         """)
         self.name_label.setWordWrap(True)
-        layout.addWidget(self.name_label)
+        content_layout.addWidget(self.name_label)
         
         # Autor y versión
         self.meta_label = QLabel()
@@ -550,28 +571,13 @@ class ModDetailWidget(QWidget):
             }
         """)
         self.meta_label.setWordWrap(True)
-        layout.addWidget(self.meta_label)
+        content_layout.addWidget(self.meta_label)
         
         # Separador
         separator = QFrame()
         separator.setFrameShape(QFrame.HLine)
         separator.setStyleSheet("background-color: #2d2d2d; margin: 5px 0;")
-        layout.addWidget(separator)
-        
-        # Contenedor principal con scroll
-        main_scroll = QScrollArea()
-        main_scroll.setWidgetResizable(True)
-        main_scroll.setStyleSheet("""
-            QScrollArea {
-                border: none;
-                background-color: transparent;
-            }
-        """)
-        
-        content_widget = QWidget()
-        content_layout = QVBoxLayout(content_widget)
-        content_layout.setContentsMargins(0, 0, 0, 0)
-        content_layout.setSpacing(10)
+        content_layout.addWidget(separator)
         
         # Imagen del mod
         self.image_container = QWidget()
@@ -608,7 +614,7 @@ class ModDetailWidget(QWidget):
         self.description_label.setOpenExternalLinks(True)
         content_layout.addWidget(self.description_label)
         
-        # Sección para archivos disponibles
+        # Sección para archivos disponibles (SIN scroll interna)
         self.files_section = QWidget()
         files_layout = QVBoxLayout(self.files_section)
         files_layout.setContentsMargins(0, 10, 0, 0)
@@ -625,28 +631,14 @@ class ModDetailWidget(QWidget):
         """)
         files_layout.addWidget(files_title)
         
-        # Contenedor para los widgets de archivos
+        # Contenedor para los widgets de archivos (SIN scroll interna)
         self.files_container = QWidget()
         self.files_container_layout = QVBoxLayout(self.files_container)
         self.files_container_layout.setContentsMargins(0, 0, 0, 0)
-        self.files_container_layout.setSpacing(5)
+        self.files_container_layout.setSpacing(10)
         
-        # Scroll area para archivos
-        files_scroll = QScrollArea()
-        files_scroll.setWidgetResizable(True)
-        files_scroll.setMinimumHeight(150)
-        files_scroll.setStyleSheet("""
-            QScrollArea {
-                border: 1px solid #2d2d2d;
-                border-radius: 6px;
-                background-color: #141414;
-            }
-            QScrollArea > QWidget > QWidget {
-                background-color: #141414;
-            }
-        """)
-        files_scroll.setWidget(self.files_container)
-        files_layout.addWidget(files_scroll)
+        # Añadir el contenedor de archivos directamente (sin QScrollArea)
+        files_layout.addWidget(self.files_container)
         
         # Label para estado de carga de archivos
         self.files_status_label = QLabel()
@@ -662,12 +654,14 @@ class ModDetailWidget(QWidget):
         files_layout.addWidget(self.files_status_label)
         
         content_layout.addWidget(self.files_section)
-        content_layout.addStretch()
+        content_layout.addStretch(1)
         
+        # Establecer el widget de contenido en el scroll principal
         main_scroll.setWidget(content_widget)
         layout.addWidget(main_scroll, 1)
+        # ==============================================================
         
-        # Botón para ver en CurseForge
+        # Botón para ver en CurseForge (FUERA del scroll)
         button_layout = QHBoxLayout()
         button_layout.setSpacing(10)
         
@@ -1088,6 +1082,56 @@ status_label.setStyleSheet("""
 status_label.setAlignment(Qt.AlignCenter)
 results_layout.addWidget(status_label)
 
+# ============= MENSAJE DE SIN RESULTADOS =============
+no_results_container = QWidget()
+no_results_layout = QVBoxLayout(no_results_container)
+no_results_layout.setContentsMargins(20, 20, 20, 20)
+
+no_results_label = QLabel("😔 No se encontraron resultados para tu búsqueda.\n\nIntenta con otros términos o ajusta los filtros.")
+no_results_label.setObjectName("NoResultsLabel")
+no_results_label.setStyleSheet("""
+    QLabel#NoResultsLabel {
+        color: #888888;
+        font-size: 13px;
+        line-height: 140%;
+        text-align: center;
+    }
+""")
+no_results_label.setWordWrap(True)
+no_results_label.setAlignment(Qt.AlignCenter)
+no_results_layout.addWidget(no_results_label)
+
+# Botón para volver a buscar
+back_search_btn = QPushButton("🔄 Volver a buscar")
+back_search_btn.setObjectName("BackSearchButton")
+back_search_btn.setMinimumHeight(40)
+back_search_btn.setStyleSheet("""
+    QPushButton#BackSearchButton {
+        background-color: #4CAF50;
+        border: 1px solid #3D8B40;
+        border-radius: 6px;
+        color: white;
+        padding: 10px 20px;
+        font-size: 13px;
+        font-weight: bold;
+        margin-top: 15px;
+    }
+    QPushButton#BackSearchButton:hover {
+        background-color: #5DBB63;
+        border: 1px solid #4CAF50;
+    }
+    QPushButton#BackSearchButton:pressed {
+        background-color: #3D8B40;
+        border: 1px solid #2D7B30;
+    }
+""")
+no_results_layout.addWidget(back_search_btn)
+
+# Inicialmente oculto
+no_results_container.setVisible(False)
+results_layout.addWidget(no_results_container)
+# ====================================================
+
 main_splitter.addWidget(results_panel)
 
 # Panel derecho: Detalles del mod
@@ -1101,6 +1145,29 @@ details_layout.setSpacing(0)
 mod_details = ModDetailWidget()
 mod_details.main_window = main_window
 details_layout.addWidget(mod_details)
+
+# ============= MENSAJE DE ESPERA EN DETALLES =============
+waiting_container = QWidget()
+waiting_layout = QVBoxLayout(waiting_container)
+waiting_layout.setContentsMargins(20, 20, 20, 20)
+
+waiting_label = QLabel("👈 Selecciona un mod de la lista para ver sus detalles aquí.\n\nAquí aparecerá toda la información, descripción y versiones disponibles para descargar.")
+waiting_label.setObjectName("WaitingLabel")
+waiting_label.setStyleSheet("""
+    QLabel#WaitingLabel {
+        color: #888888;
+        font-size: 13px;
+        line-height: 140%;
+        text-align: center;
+    }
+""")
+waiting_label.setWordWrap(True)
+waiting_label.setAlignment(Qt.AlignCenter)
+waiting_layout.addWidget(waiting_label)
+
+waiting_container.setVisible(False)  # Oculto inicialmente
+details_layout.addWidget(waiting_container)
+# ========================================================
 
 main_splitter.addWidget(details_panel)
 
@@ -1140,12 +1207,19 @@ def search_mods(load_more=False):
             status_label.setText("⚠️ Escribe algo para buscar")
             return
         
-        # ============= Ocultar mensaje informativo =============
+        # Ocultar mensaje informativo inicial
         info_container.setVisible(False)
-        # =============================================================
+        
+        # Mostrar paneles principales
+        results_panel.setVisible(True)
+        details_panel.setVisible(True)
+        
+        # Ocultar mensajes de no resultados
+        no_results_container.setVisible(False)
+        waiting_container.setVisible(True)  # Mostrar mensaje de espera hasta que cargue
         
         current_query = query
-        current_category = category_combo.currentData()
+        current_category = category_combo.currentData()  # Obtener categoría seleccionada del ComboBox
         current_page = 0
         has_more_results = True
         
@@ -1162,17 +1236,16 @@ def search_mods(load_more=False):
         global currently_selected_mod_id
         currently_selected_mod_id = None
         
-        # ============= LIMPIAR COMPLETAMENTE LOS DETALLES =============
+        # Limpiar detalles
         mod_details.name_label.clear()
         mod_details.meta_label.clear()
         mod_details.description_label.clear()
         mod_details.image_label.clear()
         mod_details.view_website_btn.setEnabled(False)
         mod_details.files_section.setVisible(False)
-        mod_details.clear_files_container()  # Limpiar archivos
+        mod_details.clear_files_container()
         mod_details.files_status_label.clear()
-        mod_details.current_mod = None  # Limpiar referencia al mod actual
-        # =============================================================
+        mod_details.current_mod = None
     else:
         if not has_more_results or is_loading_more:
             return
@@ -1202,11 +1275,32 @@ def on_search_finished(results):
     
     if not results:
         if current_page == 0:
+            # Mostrar mensaje de no resultados
             status_label.setText("😔 No se encontraron resultados")
+            
+            # Ocultar lista y mostrar mensaje de no resultados
+            results_list.setVisible(False)
+            no_results_container.setVisible(True)
+            
+            # Ocultar mensaje de espera y limpiar detalles
+            waiting_container.setVisible(False)
+            mod_details.name_label.clear()
+            mod_details.meta_label.clear()
+            mod_details.description_label.clear()
+            mod_details.image_label.clear()
+            mod_details.view_website_btn.setEnabled(False)
+            mod_details.files_section.setVisible(False)
+            mod_details.clear_files_container()
+            mod_details.files_status_label.clear()
         else:
             has_more_results = False
             status_label.setText("✅ Fin de los resultados")
         return
+    
+    # Ocultar mensaje de no resultados
+    no_results_container.setVisible(False)
+    results_list.setVisible(True)
+    waiting_container.setVisible(False)  # Ocultar mensaje de espera
     
     current_search_results.extend(results)
     
@@ -1223,10 +1317,10 @@ def on_search_finished(results):
         item_widget = ModItemWidget(mod)
         item_widget.clicked.connect(lambda mod_data=mod: show_mod_details(mod_data))
         
-        # Crear item de lista (aumentado de 60 a 70)
+        # Crear item de lista
         list_item = QListWidgetItem()
-        list_item.setSizeHint(QSize(0, 70))  # Aumentado de 60 a 70
-        list_item.setData(Qt.UserRole, mod)  # Guardar datos del mod
+        list_item.setSizeHint(QSize(0, 70))
+        list_item.setData(Qt.UserRole, mod)
         
         results_list.addItem(list_item)
         results_list.setItemWidget(list_item, item_widget)
@@ -1269,10 +1363,16 @@ def on_search_error(error_msg):
     is_loading_more = False
     status_label.setText(f"❌ {error_msg}")
     
-    # ============= Mostrar mensaje informativo si no hay resultados =============
+    # Si no hay resultados, mostrar mensaje de error
     if results_list.count() == 0:
-        info_container.setVisible(True)
-        # También limpiar detalles
+        no_results_container.setVisible(True)
+        results_list.setVisible(False)
+        waiting_container.setVisible(False)
+        
+        # Actualizar mensaje de error
+        no_results_label.setText(f"❌ Error en la búsqueda:\n{error_msg}\n\nIntenta nuevamente.")
+        
+        # Limpiar detalles
         mod_details.name_label.clear()
         mod_details.meta_label.clear()
         mod_details.description_label.clear()
@@ -1281,7 +1381,6 @@ def on_search_error(error_msg):
         mod_details.files_section.setVisible(False)
         mod_details.clear_files_container()
         mod_details.files_status_label.clear()
-    # ================================================================================
 
 def show_mod_details(mod_data):
     """Muestra detalles de un mod seleccionado"""
@@ -1294,6 +1393,9 @@ def show_mod_details(mod_data):
         return
     
     currently_selected_mod_id = mod_id
+    
+    # Ocultar mensaje de espera
+    waiting_container.setVisible(False)
     
     # Actualizar todos los widgets de la lista para reflejar la selección correcta
     for i in range(results_list.count()):
@@ -1316,7 +1418,7 @@ def show_mod_details(mod_data):
     mod_details.image_label.clear()
     mod_details.view_website_btn.setEnabled(False)
     mod_details.files_section.setVisible(False)
-    mod_details.clear_files_container()  # Limpiar archivos anteriores
+    mod_details.clear_files_container()
     mod_details.files_status_label.clear()
     
     # Cargar datos del mod (no bloqueante)
@@ -1374,7 +1476,7 @@ def start_download_mod(mod_data_with_file):
     if category_id == CATEGORIES['addons']['id']:
         dialog = QDialog(main_window)
         dialog.setWindowTitle("Seleccionar tipo de addon")
-        dialog.setFixedSize(350, 180)
+        dialog.setFixedSize(450, 180)
         dialog.setStyleSheet("""
             QDialog {
                 background-color: #1a1a1a;
@@ -1460,7 +1562,7 @@ def confirm_download(mod_data):
     # Crear diálogo personalizado
     dialog = QDialog(main_window)
     dialog.setWindowTitle("Confirmar descarga")
-    dialog.setFixedSize(400, 200)
+    dialog.setFixedSize(400, 250)
     dialog.setStyleSheet("""
         QDialog {
             background-color: #1a1a1a;
@@ -2102,11 +2204,25 @@ def on_download_error(error_msg, progress_dialog):
 # CONEXIONES Y CONFIGURACIÓN INICIAL
 # ============================================================================
 
-# Conectar botón de búsqueda
+# Conectar botones
 search_btn.clicked.connect(lambda: search_mods(load_more=False))
 search_input.returnPressed.connect(lambda: search_mods(load_more=False))
 
-# Cargar estado inicial
+# Conectar botón de volver a buscar en el mensaje de no resultados
+back_search_btn.clicked.connect(lambda: search_mods(load_more=False))
+
+# ============= CONFIGURACIÓN VISUAL INICIAL =============
+# Ocultar paneles principales inicialmente
+results_panel.setVisible(False)
+details_panel.setVisible(False)
+no_results_container.setVisible(False)
+waiting_container.setVisible(False)
+
+# Mostrar solo el mensaje informativo inicial
+info_container.setVisible(True)
+# =======================================================
+
+# Configurar estado inicial
 status_label.setText("🔍 Escribe algo para buscar")
 
 # Deshabilitar botón de website inicialmente

@@ -68,8 +68,9 @@ layout.addWidget(version_info)
 
 # Descripción
 description = QLabel(
-    "Un launcher no oficial para Minecraft: Bedrock Edition<br>"
-    "Funciona con mcpelauncher-client y mcpelauncher-extract para correr el juego<br><br>"
+    "Un launcher no oficial para Minecraft: Bedrock Edition y Java Edition<br>"
+    "Usa la API oficial de Mojang para Java Edition<br><br>"
+    "Funciona con mcpelauncher-client y mcpelauncher-extract para correr Minecraft Bedrock<br><br>"
     "No somos responsables del programa mcpelauncher-client y tampoco de mcpelauncher-extract<br><br>"
     "<b>Código fuente:</b> <a href='https://github.com/lxGNU/BoxCraft-Launcher' style='color: #4CAF50;'>"
     "https://github.com/lxGNU/BoxCraft-Launcher</a><br><br>"
@@ -79,7 +80,6 @@ description = QLabel(
     "https://codeberg.org/javiercplus/mcpe-extract</a><br><br>"
     "<span style='color: #ff4444'>Este software no está asociado, avalado o aprobado por Mojang AB,<br>"
     "Microsoft Corporation, o cualquier entidad relacionada con Minecraft.</span><br><br>"
-    "<span style='color: #4CAF50'>Agradecimientos especiales a Deepin Latin Code.</span>"
 )
 description.setAlignment(Qt.AlignCenter)
 description.setStyleSheet("""

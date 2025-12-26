@@ -29,7 +29,8 @@ install: build
 	# Add here commands to install the package into boxcraft-launcher.
 	install -d $(DESTDIR)/usr/share/boxcraft-launcher
 	install -m 755 boxcraft-launcher $(DESTDIR)/usr/share/boxcraft-launcher/
-	install -m 644 data/webapps-creator-ui.desktop $(DESTDIR)/usr/share/applications/
+	install -d $(DESTDIR)/usr/share/applications
+	install -m 644 data/boxcraft-launcher.desktop $(DESTDIR)/usr/share/applications/
 	install -d $(DESTDIR)/usr/share/icons/hicolor/scalable/apps
 	install -m 644 data/boxcraft-launcher.png $(DESTDIR)/usr/share/icons/hicolor/scalable/apps/
 

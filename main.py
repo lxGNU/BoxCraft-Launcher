@@ -20,7 +20,7 @@ from typing import Optional, Tuple
 # ============================================================================
 
 APP_NAME = "BoxCraft Launcher"
-APP_VERSION = "1.0.0"
+APP_VERSION = "1.0.1"
 
 # Directorios
 BASE_DIR = Path(__file__).parent
