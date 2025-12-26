@@ -68,8 +68,7 @@ layout.addWidget(version_info)
 
 # Descripción
 description = QLabel(
-    "Un launcher no oficial para Minecraft: Bedrock Edition y Java Edition<br>"
-    "Usa la API oficial de Mojang para Java Edition<br><br>"
+    "Un launcher no oficial para Minecraft: Bedrock Edition<br>"
     "Funciona con mcpelauncher-client y mcpelauncher-extract para correr Minecraft Bedrock<br><br>"
     "No somos responsables del programa mcpelauncher-client y tampoco de mcpelauncher-extract<br><br>"
     "<b>Código fuente:</b> <a href='https://github.com/lxGNU/BoxCraft-Launcher' style='color: #4CAF50;'>"
