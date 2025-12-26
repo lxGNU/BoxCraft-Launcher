@@ -16,7 +16,7 @@ Creado usando los proyectos:
 
 Compilar binario:
 
-    python build.py --clean --test
+    python build.py --clean --simple --test
 (Mueve el archivo compilado en dist a la carpeta del proyecto)
 
 Compilar paquete Deb:
